@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { fetchWeather } from "./services/weatherAPI";
 import { WeatherCard } from "./components/WeatherCard";
+import { SearchBar } from "./components/SearchBar";
 import { WeatherData } from "./types/weather";
+import "./App.css";
 
 function App() {
   const [weather, setWeather] = useState<WeatherData | null>(null);
@@ -29,25 +31,13 @@ function App() {
     setCity(query);
   };
 
-  if (loading) return <p>Loading...</p>;
-  if (!weather) return <p>Failed to load weather data.</p>;
-
   return (
-    <div style={{ padding: "1rem", fontFamily: "sans-serif" }}>
-      <h1>Simple Weather Reporter</h1>
-      <form onSubmit={handleSubmit} style={{ marginBottom: "1rem" }}>
-        <input
-          type="text"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          placeholder="Enter city name"
-          required
-          style={{ padding: "0.5rem", marginRight: "0.5rem" }}
-        />
-        <button type="submit">Search</button>
-      </form>
-
-      <WeatherCard data={weather} />
+    <div className="app">
+      <h1 className="title">🌤️ Weather Reporter</h1>
+      <SearchBar query={query} setQuery={setQuery} onSubmit={handleSubmit} />
+      {loading && <p>Loading...</p>}
+      {!loading && weather && <WeatherCard data={weather} />}
+      {!loading && !weather && <p>Failed to load weather data.</p>}
     </div>
   );
 }
