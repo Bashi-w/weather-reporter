@@ -10,16 +10,9 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [city, setCity] = useState("Colombo");
   const [query, setQuery] = useState("Colombo");
+  const [darkMode, setDarkMode] = useState(false);
 
   useEffect(() => {
-    fetchWeather("Colombo")
-      .then(setWeather)
-      .catch(console.error)
-      .finally(() => setLoading(false));
-  }, []);
-
-  useEffect(() => {
-    setLoading(true);
     fetchWeather(city)
       .then(setWeather)
       .catch(console.error)
@@ -31,11 +24,23 @@ function App() {
     setCity(query);
   };
 
+  const toggleTheme = () => {
+    setDarkMode((prev) => !prev);
+    document.body.classList.toggle("dark");
+  };
+
   return (
     <div className="app">
+      <button onClick={toggleTheme} className="theme-toggle">
+        {darkMode ? "☀️ Light" : "🌙 Dark"}
+      </button>
       <h1 className="title">🌤️ Weather Reporter</h1>
       <SearchBar query={query} setQuery={setQuery} onSubmit={handleSubmit} />
-      {loading && <p>Loading...</p>}
+      {loading && (
+        <div className="spinner-container">
+          <div className="spinner"></div>
+        </div>
+      )}
       {!loading && weather && <WeatherCard data={weather} />}
       {!loading && !weather && <p>Failed to load weather data.</p>}
     </div>

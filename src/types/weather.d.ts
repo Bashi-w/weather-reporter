@@ -15,5 +15,6 @@ export interface WeatherData {
     feelslike_c: number;
     vis_km: number;
     pressure_mb: number;
+    cloud: number;
   };
 }

@@ -22,7 +22,8 @@ export const WeatherCard = ({ data }: Props) => (
       <p>💨 Wind: {data.current.wind_kph} kph</p>
       <p>🌫️ Visibility: {data.current.vis_km} km</p>
       <p>🔆 UV Index: {data.current.uv}</p>
-      <p className="pressure-center">💡 Pressure: {data.current.pressure_mb} mb</p>
+      <p>💡 Pressure: {data.current.pressure_mb} mb</p>
+      <p>☁️ Cloud Cover: {data.current.cloud}%</p>
     </div>
   </div>
 );
